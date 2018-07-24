@@ -33,8 +33,8 @@ os_main			equ	0000h	; Where the OS code starts
 
 ; Screen control
 
-os_clear_screen		equ	0215h	; (Nothing used)
-os_print_string		equ	021Ah	; SI = zero-terminated string location
+os_clear_screen		equ	021Ah	; (Nothing used)
+os_print_string		equ	0215h	; SI = zero-terminated string location
 os_move_cursor		equ	0139h	; DH, DL = row, column
 os_print_horiz_line	equ	021Fh	; AX = 1 for double line, else single
 os_print_newline	equ	0233h	; (Nothing used)

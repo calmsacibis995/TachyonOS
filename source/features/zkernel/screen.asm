@@ -221,6 +221,8 @@ os_draw_block:
 	
 	mov [.rows], di
 	
+	; find starting byte
+	
 	mov ax, 0			; start with row * 80
 	mov al, dh
 	mov bx, ax			; use bit shifts for fast multiplication
@@ -890,14 +892,16 @@ os_set_text_block:
 os_print_string:
 	pusha
 
-	mov ah, 0Eh			; int 10h teletype function
+	mov ah, 0x0E			; int 10h teletype function
+	mov bh, 0
 
 .repeat:
 	lodsb				; Get char from string
 	cmp al, 0
 	je .done			; If char is zero, end of string
 
-	int 10h				; Otherwise, print it
+	int 0x10			; Otherwise, print it
+
 	jmp .repeat			; And move on to next char
 
 .done:
