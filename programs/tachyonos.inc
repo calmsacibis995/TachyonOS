@@ -33,33 +33,33 @@ os_main			equ	0000h	; Where the OS code starts
 
 ; Screen control
 
-os_clear_screen		equ	0009h	; (Nothing used)
-os_print_string		equ	0003h	; SI = zero-terminated string location
+os_clear_screen		equ	0215h	; (Nothing used)
+os_print_string		equ	021Ah	; SI = zero-terminated string location
 os_move_cursor		equ	0139h	; DH, DL = row, column
-os_print_horiz_line	equ	000Ch	; AX = 1 for double line, else single
-os_print_newline	equ	000Fh	; (Nothing used)
-os_draw_background	equ	002Ah	; AX, BX = strings, CX = colour
+os_print_horiz_line	equ	021Fh	; AX = 1 for double line, else single
+os_print_newline	equ	0233h	; (Nothing used)
+os_draw_background	equ	022Eh	; AX, BX = strings, CX = colour
 os_draw_block		equ	013Eh	; BL = colour, DH/DL/SI/DI = pos
-os_input_dialog		equ	00A8h	; AX = input string, BX = msg string
-os_dialog_box		equ	003Ch	; AX, BX, CX = strings, DX = type
+os_input_dialog		equ	023Dh	; AX = input string, BX = msg string
+os_dialog_box		equ	0242h	; AX, BX, CX = strings, DX = type
 					; OUT: AX = 0 for OK, 1 for cancel
 					; (only multi choice for DX = 1)
-os_list_dialog		equ	00ABh	; IN: AX = comma-separated list of
+os_list_dialog		equ	01FCh	; IN: AX = comma-separated list of
 					; option strings, BX, CX = help to
 					; display at top of list
 					; OUT: AX = number (starting from 1)
 					; of option selected, or carry if Esc
-os_file_selector	equ	005Ah	; Returns filename in AX
-os_get_cursor_pos	equ	0069h	; OUT: DH = row, DL = column
-os_print_space		equ	006Ch	; (Nothing used)
-os_dump_string		equ	006Fh	; SI = string location
-os_print_digit		equ	0072h	; AX = digit to print
-os_print_1hex		equ	0075h	; Display low nibble of AL in hex
-os_print_2hex		equ	0078h	; Display AL in hex
-os_print_4hex		equ	007Bh	; Display AX in hex
-os_show_cursor		equ	008Ah	; (Nothing used)
-os_hide_cursor		equ	008Dh	; (Nothing used)
-os_dump_registers	equ	0090h	; Shows contents of AX, BX, CX, DX
+os_file_selector	equ	01F7h	; Returns filename in AX
+os_get_cursor_pos	equ	020Bh	; OUT: DH = row, DL = column
+os_print_space		equ	0210h	; (Nothing used)
+os_dump_string		equ	0247h	; SI = string location
+os_print_digit		equ	024Ch	; AX = digit to print
+os_print_1hex		equ	025Bh	; Display low nibble of AL in hex
+os_print_2hex		equ	0260h	; Display AL in hex
+os_print_4hex		equ	0265h	; Display AX in hex
+os_show_cursor		equ	0224h	; (Nothing used)
+os_hide_cursor		equ	0229h	; (Nothing used)
+os_dump_registers	equ	0238h	; Shows contents of AX, BX, CX, DX
 os_draw_border		equ 	012Ah
 os_draw_horizontal_line	equ 	012Fh
 os_draw_vertical_line	equ 	0134h
@@ -178,6 +178,7 @@ os_mouse_middleclick	equ	0170h
 os_mouse_rightclick	equ	0175h
 os_input_wait		equ	017Ah
 os_mouse_scale		equ	017Fh
+os_mouse_exists		equ	0206h
 
 
 ; Misc OS functions

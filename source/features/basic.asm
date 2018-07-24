@@ -2490,6 +2490,7 @@ do_input:
 
 .number_var:
 	mov ax, string_buffer			; Get input from the user
+	mov bx, 6
 	call os_input_string
 
 	mov ax, string_buffer
@@ -2518,6 +2519,7 @@ do_input:
 	push bx
 
 	mov ax, string_buffer
+	mov bx, 128
 	call os_input_string
 
 	mov si, string_buffer

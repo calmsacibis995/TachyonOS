@@ -36,162 +36,185 @@
 ; in the kernel source code...
 
 os_call_vectors:
-	jmp os_main			; 0000h -- Called from bootloader
-	jmp os_print_string		; 0003h
-	jmp os_move_cursor		; 0006h --- Moved to zkernel, redirects for binary compatibility with MikeOS
-	jmp os_clear_screen		; 0009h
-	jmp os_print_horiz_line		; 000Ch
-	jmp os_print_newline		; 000Fh
-	jmp os_wait_for_key		; 0012h --- Moved to zkernel, redirects for binary compatibility with MikeOS--- Moved to zkernel, redirects for binary compatibility with MikeOS
-	jmp os_check_for_key		; 0015h --- Moved to zkernel, redirects for binary compatibility with MikeOS
-	jmp os_int_to_string		; 0018h
-	jmp os_speaker_tone		; 001Bh --- Moved to zkernel, redirects for binary compatibility with MikeOS
-	jmp os_speaker_off		; 001Eh --- Moved to zkernel, redirects for binary compatibility with MikeOS
-	jmp os_load_file		; 0021h
-	jmp os_pause			; 0024h
-	jmp os_fatal_error		; 0027h
-	jmp os_draw_background		; 002Ah
-	jmp os_string_length		; 002Dh
-	jmp os_string_uppercase		; 0030h
-	jmp os_string_lowercase		; 0033h
-	jmp os_input_string		; 0036h
-	jmp os_string_copy		; 0039h
-	jmp os_dialog_box		; 003Ch
-	jmp os_string_join		; 003Fh
-	jmp os_get_file_list		; 0042h
-	jmp os_string_compare		; 0045h
-	jmp os_string_chomp		; 0048h
-	jmp os_string_strip		; 004Bh
-	jmp os_string_truncate		; 004Eh
-	jmp os_bcd_to_int		; 0051h --- Moved to zkernel, redirects for binary compatibility with MikeOS
-	jmp os_get_time_string		; 0054h
-	jmp os_get_api_version		; 0057h
-	jmp os_file_selector		; 005Ah
-	jmp os_get_date_string		; 005Dh
-	jmp os_send_via_serial		; 0060h --- Moved to zkernel, redirects for binary compatibility with MikeOS
-	jmp os_get_via_serial		; 0063h --- Moved to zkernel, redirects for binary compatibility with MikeOS
-	jmp os_find_char_in_string	; 0066h
-	jmp os_get_cursor_pos		; 0069h
-	jmp os_print_space		; 006Ch
-	jmp os_dump_string		; 006Fh
-	jmp os_print_digit		; 0072h
-	jmp os_print_1hex		; 0075h
-	jmp os_print_2hex		; 0078h
-	jmp os_print_4hex		; 007Bh
-	jmp os_long_int_to_string	; 007Eh
-	jmp os_long_int_negate		; 0081h --- Moved to zkernel, redirects for binary compatibility with MikeOS
-	jmp os_set_time_fmt		; 0084h
-	jmp os_set_date_fmt		; 0087h
-	jmp os_show_cursor		; 008Ah
-	jmp os_hide_cursor		; 008Dh
-	jmp os_dump_registers		; 0090h
-	jmp os_string_strincmp		; 0093h
-	jmp os_write_file		; 0096h
-	jmp os_file_exists		; 0099h
-	jmp os_create_file		; 009Ch
-	jmp os_remove_file		; 009Fh
-	jmp os_rename_file		; 00A2h
-	jmp os_get_file_size		; 00A5h
-	jmp os_input_dialog		; 00A8h
-	jmp os_list_dialog		; 00ABh
-	jmp os_string_reverse		; 00AEh
-	jmp os_string_to_int		; 00B1h
-	jmp os_draw_block		; 00B4h --- Moved to zkernel, redirects for binary compatibility with MikeOS
-	jmp os_get_random		; 00B7h --- Moved to zkernel, redirects for binary compatibility with MikeOS
-	jmp os_string_charchange	; 00BAh
-	jmp os_serial_port_enable	; 00BDh --- Moved to zkernel, redirects for binary compatibility with MikeOS
-	jmp os_sint_to_string		; 00C0h
-	jmp os_string_parse		; 00C3h
-	jmp os_run_basic		; 00C6h
-	jmp os_port_byte_out		; 00C9h --- Moved to zkernel, redirects for binary compatibility with MikeOS
-	jmp os_port_byte_in		; 00CCh --- Moved to zkernel, redirects for binary compatibility with MikeOS
-	jmp os_string_tokenize		; 00CFh
-	jmp os_speaker_freq		; 00D2h
+	jmp os_main			; 0x0000 -- Called from bootloader
+	jmp os_print_string		; 0x0003
+	jmp os_move_cursor		; 0x0006 --- Moved to zkernel, redirects for binary compatibility with MikeOS
+	jmp os_clear_screen		; 0x0009
+	jmp os_print_horiz_line		; 0x000C
+	jmp os_print_newline		; 0x000F
+	jmp os_wait_for_key		; 0x0012 --- Moved to zkernel, redirects for binary compatibility with MikeOS--- Moved to zkernel, redirects for binary compatibility with MikeOS
+	jmp os_check_for_key		; 0x0015 --- Moved to zkernel, redirects for binary compatibility with MikeOS
+	jmp os_int_to_string		; 0x0018
+	jmp os_speaker_tone		; 0x001B --- Moved to zkernel, redirects for binary compatibility with MikeOS
+	jmp os_speaker_off		; 0x001E --- Moved to zkernel, redirects for binary compatibility with MikeOS
+	jmp os_load_file		; 0x0021
+	jmp os_pause			; 0x0024
+	jmp os_fatal_error		; 0x0027
+	jmp os_draw_background		; 0x002A
+	jmp os_string_length		; 0x002D
+	jmp os_string_uppercase		; 0x0030
+	jmp os_string_lowercase		; 0x0033
+	jmp os_input_string		; 0x0036
+	jmp os_string_copy		; 0x0039
+	jmp os_dialog_box		; 0x003C
+	jmp os_string_join		; 0x003F
+	jmp os_get_file_list		; 0x0042
+	jmp os_string_compare		; 0x0045
+	jmp os_string_chomp		; 0x0048
+	jmp os_string_strip		; 0x004B
+	jmp os_string_truncate		; 0x004E
+	jmp os_bcd_to_int		; 0x0051 --- Moved to zkernel, redirects for binary compatibility with MikeOS
+	jmp os_get_time_string		; 0x0054
+	jmp os_get_api_version		; 0x0057
+	jmp os_file_selector		; 0x005A
+	jmp os_get_date_string		; 0x005D
+	jmp os_send_via_serial		; 0x0060 --- Moved to zkernel, redirects for binary compatibility with MikeOS
+	jmp os_get_via_serial		; 0x0063 --- Moved to zkernel, redirects for binary compatibility with MikeOS
+	jmp os_find_char_in_string	; 0x0066
+	jmp os_get_cursor_pos		; 0x0069
+	jmp os_print_space		; 0x006C
+	jmp os_dump_string		; 0x006F
+	jmp os_print_digit		; 0x0072
+	jmp os_print_1hex		; 0x0075
+	jmp os_print_2hex		; 0x0078
+	jmp os_print_4hex		; 0x007B
+	jmp os_long_int_to_string	; 0x007E
+	jmp os_long_int_negate		; 0x0081 --- Moved to zkernel, redirects for binary compatibility with MikeOS
+	jmp os_set_time_fmt		; 0x0084
+	jmp os_set_date_fmt		; 0x0087
+	jmp os_show_cursor		; 0x008A
+	jmp os_hide_cursor		; 0x008D
+	jmp os_dump_registers		; 0x0090
+	jmp os_string_strincmp		; 0x0093
+	jmp os_write_file		; 0x0096
+	jmp os_file_exists		; 0x0099
+	jmp os_create_file		; 0x009C
+	jmp os_remove_file		; 0x009F
+	jmp os_rename_file		; 0x00A2
+	jmp os_get_file_size		; 0x00A5
+	jmp os_input_dialog		; 0x00A8
+	jmp os_list_dialog		; 0x00AB
+	jmp os_string_reverse		; 0x00AE
+	jmp os_string_to_int		; 0x00B1
+	jmp os_draw_block		; 0x00B4 --- Moved to zkernel, redirects for binary compatibility with MikeOS
+	jmp os_get_random		; 0x00B7 --- Moved to zkernel, redirects for binary compatibility with MikeOS
+	jmp os_string_charchange	; 0x00BA
+	jmp os_serial_port_enable	; 0x00BD --- Moved to zkernel, redirects for binary compatibility with MikeOS
+	jmp os_sint_to_string		; 0x00C0
+	jmp os_string_parse		; 0x00C3
+	jmp os_run_basic		; 0x00C6
+	jmp os_port_byte_out		; 0x00C9 --- Moved to zkernel, redirects for binary compatibility with MikeOS
+	jmp os_port_byte_in		; 0x00CC --- Moved to zkernel, redirects for binary compatibility with MikeOS
+	jmp os_string_tokenize		; 0x00CF
+	jmp os_speaker_freq		; 0x00D2
 	
 ; Extended Call Vectors
 ; Intersegmental kernel calls
 %INCLUDE 'zkernel.inc'
 
-	jmp 0x1000:ptr_text_mode		; 00D5h
-	jmp 0x1000:ptr_graphics_mode		; 00DAh
-	jmp 0x1000:ptr_set_pixel		; 00DFh
-	jmp 0x1000:ptr_get_pixel		; 00E4h
-	jmp 0x1000:ptr_draw_line		; 00E9h
-	jmp 0x1000:ptr_draw_rectangle		; 00EEh
-	jmp 0x1000:ptr_draw_polygon		; 00F3h
-	jmp 0x1000:ptr_clear_graphics		; 00F8h
-	jmp 0x1000:ptr_memory_allocate		; 00FDh
-	jmp 0x1000:ptr_memory_release		; 0102h
-	jmp 0x1000:ptr_memory_free		; 0107h
-	jmp 0x1000:ptr_memory_reset		; 010Ch
-	jmp 0x1000:ptr_memory_read		; 0111h
-	jmp 0x1000:ptr_memory_write		; 0116h
-	jmp 0x1000:ptr_speaker_freq		; 011Bh
-	jmp 0x1000:ptr_speaker_tone		; 0120h
-	jmp 0x1000:ptr_speaker_off		; 0125h
-	jmp 0x1000:ptr_draw_border		; 012Ah
-	jmp 0x1000:ptr_draw_horizontal_line	; 012Fh
-	jmp 0x1000:ptr_draw_vertical_line	; 0134h
-	jmp 0x1000:ptr_move_cursor		; 0139h
-	jmp 0x1000:ptr_draw_block		; 013Eh
-	jmp 0x1000:ptr_mouse_setup		; 0143h
-	jmp 0x1000:ptr_mouse_locate		; 0148h
-	jmp 0x1000:ptr_mouse_move		; 014Dh
-	jmp 0x1000:ptr_mouse_show		; 0152h
-	jmp 0x1000:ptr_mouse_hide		; 0157h
-	jmp 0x1000:ptr_mouse_range		; 015Ch
-	jmp 0x1000:ptr_mouse_wait		; 0161h
-	jmp 0x1000:ptr_mouse_anyclick		; 0166h
-	jmp 0x1000:ptr_mouse_leftclick		; 016Bh
-	jmp 0x1000:ptr_mouse_middleclick	; 0170h
-	jmp 0x1000:ptr_mouse_rightclick		; 0175h
-	jmp 0x1000:ptr_input_wait		; 017Ah
-	jmp 0x1000:ptr_mouse_scale		; 017Fh
-	jmp 0x1000:ptr_wait_for_key		; 0184h
-	jmp 0x1000:ptr_check_for_key		; 0189h
-	jmp 0x1000:ptr_seed_random		; 018Eh
-	jmp 0x1000:ptr_get_random		; 0193h
-	jmp 0x1000:ptr_bcd_to_int		; 0198h
-	jmp 0x1000:ptr_long_int_negate		; 019Dh
-	jmp 0x1000:ptr_port_byte_out		; 01A2h
-	jmp 0x1000:ptr_port_byte_in		; 01A7h
-	jmp 0x1000:ptr_serial_port_enable	; 01ACh
-	jmp 0x1000:ptr_send_via_serial		; 01B1h
-	jmp 0x1000:ptr_get_via_serial		; 01B6h
-	jmp 0x1000:ptr_square_root		; 01BBh
-	jmp 0x1000:ptr_check_for_extkey		; 01C0h
-	jmp 0x1000:ptr_draw_circle		; 01C5h
-	jmp 0x1000:ptr_add_custom_icons		; 01CAh
-	jmp 0x1000:ptr_load_file		; 01CFh
-	jmp 0x1000:ptr_get_file_list		; 01D4h
-	jmp 0x1000:ptr_write_file		; 01D9h
-	jmp 0x1000:ptr_file_exists		; 01DEh
-	jmp 0x1000:ptr_create_file		; 01E3h
-	jmp 0x1000:ptr_remove_file		; 01E8h
-	jmp 0x1000:ptr_rename_file		; 01EDh
-	jmp 0x1000:ptr_get_file_size		; 01F2h
-	jmp 0x1000:ptr_file_selector		; 01F7h
-	jmp 0x1000:ptr_list_dialog		; 01FCh
-	jmp 0x1000:ptr_pause			; 0201h
+	jmp 0x1000:ptr_text_mode		; 0x00D5
+	jmp 0x1000:ptr_graphics_mode		; 0x00DA
+	jmp 0x1000:ptr_set_pixel		; 0x00DF
+	jmp 0x1000:ptr_get_pixel		; 0x00E4
+	jmp 0x1000:ptr_draw_line		; 0x00E9
+	jmp 0x1000:ptr_draw_rectangle		; 0x00EE
+	jmp 0x1000:ptr_draw_polygon		; 0x00F3
+	jmp 0x1000:ptr_clear_graphics		; 0x00F8
+	jmp 0x1000:ptr_memory_allocate		; 0x00FD
+	jmp 0x1000:ptr_memory_release		; 0x0102
+	jmp 0x1000:ptr_memory_free		; 0x0107
+	jmp 0x1000:ptr_memory_reset		; 0x010C
+	jmp 0x1000:ptr_memory_read		; 0x0111
+	jmp 0x1000:ptr_memory_write		; 0x0116
+	jmp 0x1000:ptr_speaker_freq		; 0x011B
+	jmp 0x1000:ptr_speaker_tone		; 0x0120
+	jmp 0x1000:ptr_speaker_off		; 0x0125
+	jmp 0x1000:ptr_draw_border		; 0x012A
+	jmp 0x1000:ptr_draw_horizontal_line	; 0x012F
+	jmp 0x1000:ptr_draw_vertical_line	; 0x0134
+	jmp 0x1000:ptr_move_cursor		; 0x0139
+	jmp 0x1000:ptr_draw_block		; 0x013E
+	jmp 0x1000:ptr_mouse_setup		; 0x0143
+	jmp 0x1000:ptr_mouse_locate		; 0x0148
+	jmp 0x1000:ptr_mouse_move		; 0x014D
+	jmp 0x1000:ptr_mouse_show		; 0x0152
+	jmp 0x1000:ptr_mouse_hide		; 0x0157
+	jmp 0x1000:ptr_mouse_range		; 0x015C
+	jmp 0x1000:ptr_mouse_wait		; 0x0161
+	jmp 0x1000:ptr_mouse_anyclick		; 0x0166
+	jmp 0x1000:ptr_mouse_leftclick		; 0x016B
+	jmp 0x1000:ptr_mouse_middleclick	; 0x0170
+	jmp 0x1000:ptr_mouse_rightclick		; 0x0175
+	jmp 0x1000:ptr_input_wait		; 0x017A
+	jmp 0x1000:ptr_mouse_scale		; 0x017F
+	jmp 0x1000:ptr_wait_for_key		; 0x0184
+	jmp 0x1000:ptr_check_for_key		; 0x0189
+	jmp 0x1000:ptr_seed_random		; 0x018E
+	jmp 0x1000:ptr_get_random		; 0x0193
+	jmp 0x1000:ptr_bcd_to_int		; 0x0198
+	jmp 0x1000:ptr_long_int_negate		; 0x019D
+	jmp 0x1000:ptr_port_byte_out		; 0x01A2
+	jmp 0x1000:ptr_port_byte_in		; 0x01A7
+	jmp 0x1000:ptr_serial_port_enable	; 0x01AC
+	jmp 0x1000:ptr_send_via_serial		; 0x01B1
+	jmp 0x1000:ptr_get_via_serial		; 0x01B6
+	jmp 0x1000:ptr_square_root		; 0x01BB
+	jmp 0x1000:ptr_check_for_extkey		; 0x01C0
+	jmp 0x1000:ptr_draw_circle		; 0x01C5
+	jmp 0x1000:ptr_add_custom_icons		; 0x01CA
+	jmp 0x1000:ptr_load_file		; 0x01CF
+	jmp 0x1000:ptr_get_file_list		; 0x01D4
+	jmp 0x1000:ptr_write_file		; 0x01D9
+	jmp 0x1000:ptr_file_exists		; 0x01DE
+	jmp 0x1000:ptr_create_file		; 0x01E3
+	jmp 0x1000:ptr_remove_file		; 0x01E8
+	jmp 0x1000:ptr_rename_file		; 0x01ED
+	jmp 0x1000:ptr_get_file_size		; 0x01F2
+	jmp 0x1000:ptr_file_selector		; 0x01F7
+	jmp 0x1000:ptr_list_dialog		; 0x01FC
+	jmp 0x1000:ptr_pause			; 0x0201
+	jmp 0x1000:ptr_mouse_exists		; 0x0206
+	jmp 0x1000:ptr_get_cursor_pos		; 0x020B
+	jmp 0x1000:ptr_print_space		; 0x0210
+	jmp 0x1000:ptr_print_string		; 0x0215
+	jmp 0x1000:ptr_clear_screen		; 0x021A
+	jmp 0x1000:ptr_print_horiz_line		; 0x021F
+	jmp 0x1000:ptr_show_cursor		; 0x0224
+	jmp 0x1000:ptr_hide_cursor		; 0x0229
+	jmp 0x1000:ptr_draw_background		; 0x022E
+	jmp 0x1000:ptr_print_newline		; 0x0233
+	jmp 0x1000:ptr_dump_registers		; 0x0238
+	jmp 0x1000:ptr_input_dialog		; 0x023D
+	jmp 0x1000:ptr_dialog_box		; 0x0242
+	jmp 0x1000:ptr_dump_string		; 0x0247
+	jmp 0x1000:ptr_print_digit		; 0x024C
+	jmp 0x1000:ptr_input_string		; 0x0251
+	jmp 0x1000:ptr_print_char		; 0x0256
+	jmp 0x1000:ptr_print_1hex		; 0x025B
+	jmp 0x1000:ptr_print_2hex		; 0x0260
+	jmp 0x1000:ptr_print_4hex		; 0x0265
+
+
+	
 
 
 ; ------------------------------------------------------------------
 ; START OF MAIN KERNEL CODE
 
 os_main:
-
-
 	; Install the mouse driver
 	BOOTMSG 'Installing Mouse Driver...'
 	call os_mouse_setup
 	BOOTOK
 	
+	call os_mouse_exists
+
 	; Define the range of cursor movement
 	BOOTMSG 'Setting Mouse Parameters...'
 	mov ax, 0
 	mov bx, 0
-	mov cx, [CFG_SCREEN_HEIGHT]
-	mov dx, [CFG_SCREEN_WIDTH]
+	mov cx, [CFG_SCREEN_WIDTH]
+	mov dx, [CFG_SCREEN_HEIGHT]
 	dec cx
 	dec dx
 	call os_mouse_range
@@ -212,7 +235,7 @@ os_main:
 
 	mov cx, 32768			; Otherwise load the program into RAM...
 	call os_load_file
-	jmp execute_bin_program		; ...and move on to the executing part
+	jnc execute_bin_program		; ...and move on to the executing part
 	
 	jmp start_shell
 
@@ -268,18 +291,6 @@ load_kernel_extentions:
 	
 	pop es
 	
-	call os_mouse_setup
-	
-	mov ax, 0
-	mov bx, 0
-	mov cx, 79
-	mov dx, 24
-	call os_mouse_range
-	
-	mov dh, 3
-	mov dl, 2
-	call os_mouse_scale
-
 	call os_add_custom_icons
 
 	ret
@@ -318,7 +329,6 @@ missing_important_file:
 ; FEATURES -- Code to pull into the kernel
 	%INCLUDE "features/cli.asm"
 	%INCLUDE "features/misc.asm"
-	%INCLUDE "features/screen.asm"
 	%INCLUDE "features/shell.asm"
 	%INCLUDE "features/string.asm"
 	%INCLUDE "features/basic.asm"

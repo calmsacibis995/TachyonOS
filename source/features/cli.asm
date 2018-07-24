@@ -31,6 +31,7 @@ get_cmd:				; Main processing loop
 	call os_print_string
 
 	mov ax, input			; Get command string from user
+	mov bx, 256
 	call os_input_string
 
 	call os_print_newline
@@ -297,23 +298,45 @@ list_directory:
 	call os_get_file_list
 
 	mov si, dirlist
-	mov ah, 0Eh			; BIOS teletype function
 
-.repeat:
-	lodsb				; Start printing filenames
-	cmp al, 0			; Quit if end of string
+.set_column:
+	; Put the cursor in the correct column.
+	call os_get_cursor_pos
+
+	mov ax, cx
+	and al, 0x03
+	mov bl, 20
+	mul bl
+	
+	mov dl, al
+	call os_move_cursor
+
+	mov ah, 0Eh			; BIOS teletype function
+.next_char:
+	lodsb
+
+	cmp al, ','
+	je .next_filename
+
+	cmp al, 0
 	je .done
 
-	cmp al, ','			; If comma in list string, don't print it
-	jne .nonewline
-	pusha
-	call os_print_newline		; But print a newline instead
-	popa
-	jmp .repeat
-
-.nonewline:
 	int 10h
-	jmp .repeat
+	jmp .next_char
+
+.next_filename:
+	inc cx
+	
+	mov ax, cx
+	and ax, 03h
+
+	cmp ax, 0			; New line every 4th filename.
+	jne .set_column
+
+	call os_print_newline	
+	jmp .set_column
+
+	
 
 .done:
 	call os_print_newline

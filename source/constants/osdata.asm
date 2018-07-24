@@ -2,8 +2,8 @@
 ; Version numbers and names
 %DEFINE OS_NAME_SHORT			'TachyonOS'
 %DEFINE OS_NAME_LONG			'Tachyon Operating System'
-%DEFINE OS_VERSION_NUMBER		11
-%DEFINE OS_VERSION_STRING		'OS Build #11'
+%DEFINE OS_VERSION_NUMBER		12
+%DEFINE OS_VERSION_STRING		'OS Build #12'
 
 ; Filenames to search for
 %DEFINE OS_KERNEL_FILENAME		'KERNEL.BIN'
@@ -19,4 +19,4 @@
 %DEFINE OS_TUI_BOTTOM			'Version ', OS_VERSION_STRING
 
 ; Time to wait, before entering the starting the shell (to view messages)
-%define BOOT_DELAY 50
+%define BOOT_DELAY 10

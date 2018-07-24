@@ -156,11 +156,6 @@ Description: Reverts the colour of the character at the mouse position.
 Input: none
 Output: none
 
-Call Name: os_mouse_wait
-Description: Delays until the next mouse event.
-Input: none
-Output: none
-
 Call Name: os_mouse_leftclick
 Description: Returns whether the left mouse button is currently pressed.
 Input: none
@@ -187,7 +182,7 @@ Input: AX = X minimum, BX = Y minimum, CX = X maximum, DX = Y maximum
 Output: none
 Notes: The operating system sets the screen area in text mode as the default.
 
-Call Name: os_mouse_range
+Call Name: os_mouse_scale
 Description: Set the mouse scaling factor (1:2^X)
 Input: DL = X scale factor, DH = Y scale factor
 Output: none

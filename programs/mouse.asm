@@ -2,6 +2,18 @@
 org 32768
 bits 16
 
+call os_mouse_exists
+jnc okay
+ret
+
+%macro debug 1
+	push ax
+	mov al, %1
+	out 0xE9, al
+	pop ax
+%endmacro
+
+okay:
 ; clear screen beforehand
 call os_clear_screen
 call os_hide_cursor

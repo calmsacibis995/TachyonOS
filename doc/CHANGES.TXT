@@ -5,6 +5,18 @@ Copyright (C) 2006 - 2012 MikeOS Developers -- see doc/MikeOS/LICENSE.TXT
 =============================================================================
 
 ------------------------
+Build #12 (24 July 2018)
+------------------------
+* The DIR command now prints files in a four column list.
+* os_input_string now supports a length limit.
+* os_input_dialog is now limited to 50 character that will fit in the box.
+* Fixed the INPUT command in BASIC causing buffer overflows in strings.
+* The INPUT command in BASIC now limits the number of character for integers.
+* Fixed bugs in os_file_selector and os_list_dialog.
+* os_dialog_box rewritten to prevent text overflows and clean up code.
+* Fixed TUI bugs.
+
+------------------------
 Build #11 (30 July 2015)
 ------------------------
 * Fixed many bugs in disk API.
