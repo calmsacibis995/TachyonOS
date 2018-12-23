@@ -556,6 +556,7 @@ printscore:
 return
 
 intro:
+  cls
   x = 25
   y = 1
   cursor off
