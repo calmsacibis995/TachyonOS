@@ -185,15 +185,14 @@ os_write_file:
 	mov dx, [.file_segment]
 	
 .write_clusters:
-	mov ax, [di]				; AX = sector number, DX:SI = cluster data, DI = cluster list pointer
-	xchg bx, bx
+	mov ax, [di]				; AX = cluster number, DX:SI = cluster data
 	call func_write_cluster
 	jc .failed				; Bailout if a write fails
 	
-	add si, 512				; Move to the next sector of the file and the next entry in the file list
+	add si, 512				; Move to the next cluster of the file and the next entry in the file list
 	add di, 2
 
-	loop .write_clusters			; Keep writing sectors from the list until it is finished
+	loop .write_clusters			; Keep writing clusters from the list until it is finished
 	
 	call func_write_fat			; Write the new FAT and directory contents back to the disk
 	jc .failed
@@ -699,29 +698,30 @@ func_set_fat_entry:
 	mov es, dx
 	
 	and ax, 0x0FFF			; Make sure the top bits aren't set (12-bit max)
+	and bx, 0x0FFF
 	
 	mov si, FIRST_FAT
 	
 	mov dx, ax			; Multiply the entry number by 1.5
 	shr dx, 1
-	add ax, dx
-	add si, ax
+	add dx, ax
+	add si, dx
 	
 	bt ax, 0
-	jc .even
+	jc .odd
+	
+.even:
+	mov dx, [es:si]			; Read the word containing the entry
+	and dx, 0xF000			; The first four bits belong to another entry, so keep them but clear the rest
+	or dx, bx			; Combine the other entry's bits to the ones to set
+	mov [es:si], dx			; Replace the word containing the entry
+	jmp .finish
 	
 .odd:
 	mov dx, [es:si]			; Read the word containing the entry
 	shl bx, 4			; Shift the entry to set to match it's position
 	and dx, 0x000F			; Clear the bits to set, leave the bits for the old entry
 	or dx, bx			; Combine the bits of the other entry with the one to set
-	mov [es:si], dx			; Replace the word containing the entry
-	jmp .finish
-	
-.even:
-	mov dx, [es:si]			; Read the word containing the entry
-	and dx, 0xF000			; The first four bits belong to another entry, so keep them but clear the rest
-	or dx, bx			; Combine the other entry's bits to the ones to set
 	mov [es:si], dx			; Replace the word containing the entry
 	
 .finish:
@@ -843,6 +843,8 @@ func_filename_s2d:
 	inc di
 	
 	loop .copy_name
+	
+	inc si
 	
 .start_extention:
 	mov cx, 3
@@ -1204,7 +1206,7 @@ func_new_dir_entry:
 	mov word [es:di+16], 0		; Creation Date
 	mov word [es:di+18], 0		; Last access date
 	mov word [es:di+20], 0		; Upper 16-bits of cluster number - always zero for FAT12
-	mov word [es:di+22], 0		; Last Modifcation Time
+	mov word [es:di+22], 0		; Last Modification Time
 	mov word [es:di+24], 0		; Last Modification Date
 	mov word [es:di+26], bx		; Lower 16-bits of the cluster number - first cluster
 	mov word [es:di+28], ax		; File size (byte)
@@ -1375,6 +1377,7 @@ func_create_fat_chain:
 	
 	mov [.previous_cluster], dx		; Remember the last cluster we wrote to
 	
+	inc dx
 	loop .find_free_clusters
 	
 	jmp .disk_full				; If all clusters have been checked and not enough have been found then the disk is full, report failure
@@ -1388,6 +1391,7 @@ func_create_fat_chain:
 	
 	mov [.previous_cluster], dx		; Otherwise, remember this first cluster and start a chain
 	
+	inc dx	
 	loop .find_free_clusters
 	
 	jmp .disk_full
@@ -1425,7 +1429,7 @@ func_create_fat_chain:
 ; Description: Copies the cluster list into a buffer
 ; IN: AX = first cluster
 ; OUT: CX = number of clusters, SI = list address
-; Note: Cluster entries will be saved as a list of 16-bit values format
+; Note: Cluster entries will be saved as an array of 16-bit values.
 
 func_read_fat_chain:
 	pusha
@@ -1622,6 +1626,7 @@ func_examine_disk:
 	call func_read_bpb
 	jc .failed
 	
+	mov si, BIOS_PARAMETER_BLOCK
 	mov ax, [es:si+39]			; Check if the disk serial number is the same as the one in memory
 	mov bx, [es:si+41]			; If there serial is the same, it's the same disk, otherwise it's a new disk
 	cmp ax, [diskinfo.lower_serial]
@@ -1634,7 +1639,7 @@ func_examine_disk:
 	mov [diskinfo.lower_serial], ax		; Remember current disk serial number
 	mov [diskinfo.upper_serial], bx
 	
-	mov ax, 0x0000				; Generate a new serial number for the disk
+	mov ax, 0x0001				; Generate a new serial number for the disk
 	mov bx, 0xFFFF				
 	call os_get_random
 	mov dx, cx

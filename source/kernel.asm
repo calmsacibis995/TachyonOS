@@ -202,27 +202,28 @@ os_call_vectors:
 ; START OF MAIN KERNEL CODE
 
 os_main:
-	; Install the mouse driver
-	BOOTMSG 'Installing Mouse Driver...'
-	call os_mouse_setup
-	BOOTOK
-	
-	call os_mouse_exists
-
-	; Define the range of cursor movement
-	BOOTMSG 'Setting Mouse Parameters...'
-	mov ax, 0
-	mov bx, 0
-	mov cx, [CFG_SCREEN_WIDTH]
-	mov dx, [CFG_SCREEN_HEIGHT]
-	dec cx
-	dec dx
-	call os_mouse_range
-	
-	mov dh, 3
-	mov dl, 2
-	call os_mouse_scale
-	BOOTOK
+; Temporarily removed... unreliable on old hardware.
+; 	; Install the mouse driver
+; 	BOOTMSG 'Installing Mouse Driver...'
+; 	call os_mouse_setup
+; 	BOOTOK
+; 	
+; 	call os_mouse_exists
+; 
+; 	; Define the range of cursor movement
+; 	BOOTMSG 'Setting Mouse Parameters...'
+; 	mov ax, 0
+; 	mov bx, 0
+; 	mov cx, [CFG_SCREEN_WIDTH]
+; 	mov dx, [CFG_SCREEN_HEIGHT]
+; 	dec cx
+; 	dec dx
+; 	call os_mouse_range
+; 	
+; 	mov dh, 3
+; 	mov dl, 2
+; 	call os_mouse_scale
+; 	BOOTOK
 	
 	; Let's see if there's a file called AUTORUN.BIN and execute
 	; it if so, before going to the program launcher menu

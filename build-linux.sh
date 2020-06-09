@@ -20,6 +20,7 @@ if [ ! -e disk_images/tachyonos.flp ]
 then
 	echo ">>> Creating new TachyonOS floppy image..."
 	mkdosfs -C disk_images/tachyonos.flp 1440 || exit
+	chown $SUDO_USER disk_images/tachyonos.flp
 fi
 
 

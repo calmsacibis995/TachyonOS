@@ -4,6 +4,19 @@ Copyright (C) 2013 TachyonOS Developers, uses GPL licence see doc/LICENCE.TXT
 Copyright (C) 2006 - 2012 MikeOS Developers -- see doc/MikeOS/LICENSE.TXT
 =============================================================================
 
+-----------------------
+Build #13 (09 June 2020
+-----------------------
+* Fixed a bug where files data would not be saved correctly.
+* Fixed a bug where eight character names had an erroneous dot in the 
+  file extention.
+* Fixed a bug where the disk serial number would be reset to zero.
+* Updated Yotta editor to version 1.0.4x10^25
+* Updated ASCII Artist to version 
+* Removed mouse initialization for now, it often locks up older hardware.
+* Linux build script now 'chown's files to the regular user so created disk 
+  images can be written to in an emulator. 
+
 ------------------------
 Build #12 (24 July 2018)
 ------------------------

@@ -9,7 +9,6 @@ Text Editor
 Picture Editor
 Sound Editor
 Memory Editor
-Mouse API Test
 BASIC Shell
 Commandline Shell
 Entertainment >
@@ -26,7 +25,6 @@ Turn Off
 *DRAW.BAS
 *TUNEEDIT.BIN
 *MEMEDIT.BAS
-*MOUSE.BIN
 *BASIC.BAS
 =CMDLINE
 >1
@@ -42,7 +40,6 @@ Turn Off
 128
 128
 133
-128
 128
 131
 131
