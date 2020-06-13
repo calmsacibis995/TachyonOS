@@ -193,6 +193,8 @@ os_call_vectors:
 	jmp 0x1000:ptr_print_1hex		; 0x025B
 	jmp 0x1000:ptr_print_2hex		; 0x0260
 	jmp 0x1000:ptr_print_4hex		; 0x0265
+	jmp 0x1000:ptr_set_config		; 0x026A
+	jmp 0x1000:ptr_get_config		; 0x026F
 
 
 	

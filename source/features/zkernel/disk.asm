@@ -174,7 +174,7 @@ os_write_file:
 	call func_reset_dir			; Create a directory entry
 	mov ax, [.file_size]
 	mov bx, [.first_cluster]
-	mov cl, 0
+	mov cl, 0x20
 	mov si, .file_name
 	call func_new_dir_entry
 	
@@ -1195,19 +1195,20 @@ func_new_dir_entry:
 	inc di
 	loop .copy_filename
 	
-	mov ax, [.file_size]
-	mov bx, [.first_cluster]
 	mov di, [directory.pointer]	; now set all the file information
 	
-	mov byte [es:di+11], cl		; Attributes
+	mov byte [es:di+11], dl		; Attributes
 	mov byte [es:di+12], 0		; Windows NT information
-	mov byte [es:di+13], 0		; Creation Seconds - don't worry about time values for now
-	mov byte [es:di+14], 0		; Creation Time
-	mov word [es:di+16], 0		; Creation Date
-	mov word [es:di+18], 0		; Last access date
+	mov byte [es:di+13], 0		; Creation Seconds - just set to zero for now
+	call func_make_date_stamp	; Create a date stamp from the current time
+	mov word [es:di+14], ax		; Creation Time
+	mov word [es:di+16], bx		; Creation Date
+	mov word [es:di+18], bx		; Last access date
 	mov word [es:di+20], 0		; Upper 16-bits of cluster number - always zero for FAT12
-	mov word [es:di+22], 0		; Last Modification Time
-	mov word [es:di+24], 0		; Last Modification Date
+	mov word [es:di+22], ax		; Last Modification Time
+	mov word [es:di+24], bx		; Last Modification Date
+	mov ax, [.file_size]
+	mov bx, [.first_cluster]
 	mov word [es:di+26], bx		; Lower 16-bits of the cluster number - first cluster
 	mov word [es:di+28], ax		; File size (byte)
 	mov word [es:di+30], 0		; Upper half of file size
@@ -2672,6 +2673,107 @@ func_fat_chain_length:
 
 
 
+; ------------------------------------------------------------------
+; Call: func_make_date_stamp
+; Description: Creates a new disk formatted date stamp from the current time.
+; IN: nothing
+; OUT: AX = timestamp; BX = datestamp
+
+func_make_date_stamp:
+	push cx
+	push dx
+	
+	mov byte [.retry_count], 3
+	
+.retry:
+	; Make the time stamp
+	mov ah, 0x02		; Request the time from the RTC through BIOS
+	clc
+	int 0x1A
+	jc .error		; This may fail is the RTC is being update or not working
+	
+	mov al, ch		; These are all BCDs, convert to binary numbers.
+	call os_bcd_to_int
+	mov ch, al
+	
+	mov al, cl
+	call os_bcd_to_int
+	mov cl, al
+	
+	mov al, dh
+	call os_bcd_to_int
+	mov dh, al
+
+	; Time stamp bits are: HHHHHMMMMMMSSSSS
+	movzx ax, ch		; Add the hours
+	shl ax, 6
+	or al, cl		; Add the minutes
+	shl ax, 5
+	shr dh, 1		; Timestamp is in two second intervals
+	or al, dh
+	
+	mov bx, ax
+	
+	; Make the date stamp
+	mov ah, 0x04		; Request the date from the RTC through BIOS
+	clc
+	int 0x1A
+	jc .error		; This may fail is the RTC is being update or not working
+	
+	mov al, ch		; Convert the BCDs to binary numbers...
+	call os_bcd_to_int
+	mov ch, al
+	
+	mov al, cl
+	call os_bcd_to_int
+	mov cl, al
+	
+	mov al, dh
+	call os_bcd_to_int
+	mov dh, al
+	
+	mov al, dl
+	call os_bcd_to_int
+	mov dl, al
+	
+	mov al, ch		; Year = lower_digits + century * 100
+	mov ch, 100
+	mul ch
+	movzx cx, cl
+	sub ax, 1980		; Starting year for FAT dates
+	add ax, cx
+	
+	shl ax, 4		; Add the month
+	or al, dh
+	shl ax, 5		; Add the day
+	or al, dl
+	
+	xchg ax, bx
+	
+	
+.finish:	
+	pop dx
+	pop cx
+	ret
+	
+.error:
+	cmp byte [.retry_count], 0	; On an error, wait a little bit and retry
+	je .blank_entry
+	
+	push ax
+	mov ax, 4
+	call os_pause
+	pop ax
+	
+	dec byte [.retry_count]
+	jmp .retry
+	
+.blank_entry:
+	mov ax, 0			; If it's still not successful, just put in a blank time
+	mov bx, 0
+	jmp .finish
+	
+.retry_count	db 0
 	
 ;func_flush_buffers
 

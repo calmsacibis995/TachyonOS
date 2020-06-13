@@ -181,6 +181,10 @@ os_mouse_scale		equ	017Fh
 os_mouse_exists		equ	0206h
 
 
+; Configuration routines
+os_set_config		equ	026Ah
+os_get_config		equ	026Fh
+
 ; Misc OS functions
 
 os_run_basic		equ	00C6h	; AX = code location in RAM, BX = size,

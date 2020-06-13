@@ -98,6 +98,10 @@ ptr_print_1hex			equ	0x00ED
 ptr_print_2hex			equ	0x00F0
 ptr_print_4hex			equ	0x00F3
 
+; Config API
+ptr_set_config			equ	0x00F6
+ptr_get_config			equ	0x00F9
+
 ; Other API calls
 ptr_add_custom_icons		equ	0093h
 ptr_pause			equ	00B7h

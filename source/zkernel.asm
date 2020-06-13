@@ -80,6 +80,8 @@ jmp os_print_char				; 0x00EA
 jmp os_print_1hex				; 0x00ED
 jmp os_print_2hex				; 0x00F0
 jmp os_print_4hex				; 0x00F3
+jmp os_set_config				; 0x00F6
+jmp os_get_config				; 0x00F9
 
 os_return:
 	pushf
@@ -173,4 +175,5 @@ flags_tmp			dw 0
 %INCLUDE 'features/zkernel/misc.asm'
 %INCLUDE 'features/string.asm'
 %INCLUDE 'constants/menuicons.asm'
+%INCLUDE 'features/zkernel/config.asm'
 
