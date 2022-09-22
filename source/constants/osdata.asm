@@ -16,7 +16,7 @@
 
 %DEFINE OS_BOOT_MSG			OS_NAME_LONG, ' --- ', OS_VERSION_STRING
 %DEFINE OS_TUI_TOP			OS_NAME_LONG, ' Main Menu'			
-%DEFINE OS_TUI_BOTTOM			'Version ', OS_VERSION_STRING
+%DEFINE OS_TUI_BOTTOM			'TachyonOS ', OS_VERSION_STRING
 
 ; Time to wait, before entering the starting the shell (to view messages)
 %define BOOT_DELAY 10
